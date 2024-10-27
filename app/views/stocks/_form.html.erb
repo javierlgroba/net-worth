@@ -1,0 +1,38 @@
+<%= form_with url: preview_stocks_path, method: :get, local: true do |form| %>
+    <div class="field">
+        <%= form.label :symbol, "Enter Stock Symbol" %>
+        <%= form.text_field :symbol %>
+    </div>
+
+    <%= form.submit "Preview Stock Data" %>
+<% end %>
+
+<%= form_with model: stock do |form| %>
+    <div>
+        <%= form.label :symbol %><br>
+        <%= form.text_field :symbol %>
+        <% stock.errors.full_messages_for(:symbol).each do |message| %>
+            <div><%= message %></div>
+        <% end %>
+    </div>
+
+    <div>
+        <%= form.label :alias %><br>
+        <%= form.text_field :alias %>
+        <% stock.errors.full_messages_for(:alias).each do |message| %>
+            <div><%= message %></div>
+        <% end %>
+    </div>
+
+    <div>
+        <%= form.label :currency %><br>
+        <%= form.select :currency, Money::Currency.all.sort_by(&:name).map { |currency| [currency.name, currency.iso_code] }, { prompt: 'Select a currency' } %><br>
+        <% stock.errors.full_messages_for(:currency).each do |message| %>
+            <div><%= message %></div>
+        <% end %>
+    </div>
+
+    <div>
+    <%= form.submit %>
+    </div>
+<% end %>

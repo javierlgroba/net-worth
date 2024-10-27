@@ -1,0 +1,16 @@
+<!-- app/views/stocks/preview.html.erb -->
+
+<h1>Stock Preview</h1>
+
+<% if @ticker_data.present? %>
+    <div>
+        <h2>Stock Ticker: <%= @ticker_data['ticker'] %></h2>
+        <p><strong>Name:</strong> <%= @ticker_data['name'] %></p>
+        <p><strong>Current Price:</strong> <%= @ticker_data['price'] %></p>
+        <p><strong>Currency:</strong> <%= @ticker_data['currency'] %></p>
+    </div>
+<% else %>
+    <p>Unable to fetch stock data. Please try again.</p>
+<% end %>
+
+<%= link_to 'Back', new_stock_path %>

@@ -1,0 +1,14 @@
+<h1><%= @Stock.alias %></h1>
+
+<p>
+    <%= @stock.symbol %><br>
+    <%= @stock.currency %><br>
+</p>
+
+<ul>
+    <li><%= link_to "Edit", edit_stock_path(@stock) %></li>
+    <li><%= link_to "Destroy", stock_path(@stock), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+    } %></li>
+</ul>

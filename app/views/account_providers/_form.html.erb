@@ -1,0 +1,29 @@
+<%= form_with model: account_provider do |form| %>
+    <div>
+        <%= form.label :name %><br>
+        <%= form.text_field :name %>
+        <% account_provider.errors.full_messages_for(:name).each do |message| %>
+            <div><%= message %></div>
+        <% end %>
+    </div>
+
+    <div>
+        <%= form.label :country %><br>
+        <%= form.select :country, ISO3166::Country.all.sort_by(&:iso_short_name).map { |country| [country.iso_short_name, country.alpha2] }, { prompt: 'Select a country' } %><br>
+        <% account_provider.errors.full_messages_for(:country).each do |message| %>
+            <div><%= message %></div>
+        <% end %>
+    </div>
+
+    <div>
+        <%= form.label :provider_type %><br>
+        <%= form.select :provider_type, AccountProvider.provider_types.keys.map { |key| [key.humanize, key] }, { prompt: 'Select Provider Type' } %><br>
+        <% account_provider.errors.full_messages_for(:provider_type).each do |message| %>
+            <div><%= message %></div>
+        <% end %>
+    </div>
+
+    <div>
+        <%= form.submit %>
+    </div>
+<% end %>

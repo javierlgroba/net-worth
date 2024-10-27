@@ -1,0 +1,14 @@
+<h1><%= @account_provider.name %></h1>
+
+<p>
+    <%= ISO3166::Country[@account_provider.country].emoji_flag %> <%= ISO3166::Country[@account_provider.country].iso_short_name %><br>
+    <%= @account_provider.provider_type.humanize %><br>
+</p>
+
+<ul>
+    <li><%= link_to "Edit", edit_account_provider_path(@account_provider) %></li>
+    <li><%= link_to "Destroy", account_provider_path(@account_provider), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+    } %></li>
+</ul>

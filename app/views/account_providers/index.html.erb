@@ -1,0 +1,12 @@
+<h1>Account Providers</h1>
+
+<ul>
+    <% @account_providers.each do |account_provider| %>
+        <li>
+            <%= link_to "#{ISO3166::Country[account_provider.country].emoji_flag} #{account_provider.name}", account_provider %>
+        </li>
+    <% end %>
+</ul>
+
+
+<%= link_to "New Account Provider", new_account_provider_path %>
