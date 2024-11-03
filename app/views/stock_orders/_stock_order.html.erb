@@ -1,0 +1,28 @@
+<p>
+    <strong>Units:</strong>
+    <%= stock_order.units %>
+</p>
+
+<p>
+    <strong>Price per unit:</strong>
+    <%= Money.from_amount(stock_order.unit_cost, stock_order.stock.currency).format %>
+</p>
+
+<p>
+    <strong>Date:</strong>
+    <%= stock_order.date %>
+</p>
+
+<% if stock_order.account_provider_id.present? %>
+    <p>
+        <strong>Broker:</strong>
+        <%= stock_order.account_provider.name %>
+    </p>
+<% end %>
+
+<p>
+    <%= link_to "Delete Order", [stock_order.stock, stock_order], data: {
+        turbo_method: :delete,
+        turbo_confirm: "Are you sure?"
+    } %>
+</p>

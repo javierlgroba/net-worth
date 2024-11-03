@@ -1,15 +1,15 @@
 
 class StocksController < ApplicationController
   def index
-    @stocks = Stock.all
+    @portfolio_data = StockService::Portfolio.history
   end
 
   def show
     @stock = Stock.find(params[:id])
+    @stock_data = StockService::Stock.get_info(@stock)
   end
 
   def new
-    @stock = Stock.new
   end
 
   def create
@@ -44,13 +44,9 @@ class StocksController < ApplicationController
   end
 
   def preview
-    ticker_data = YfinanceWrapperService::Ticker.get_info(params[:symbol])
-    if !ticker_data.key?("error")
-      @ticker_data = ticker_data
-      render :preview
-    else
-      redirect_to new_stock_path, alert: "Could not fetch stock data for the provided symbol."
-    end
+    symbol_data = StockService::Stock.preview(params[:symbol])
+    redirect_to new_stock_path, alert: "Could not fetch stock data for the provided symbol." if symbol_data.empty?
+    @stock = Stock.new(symbol: params[:symbol], alias: symbol_data[:name], currency: symbol_data[:currency])
   end
 
   private

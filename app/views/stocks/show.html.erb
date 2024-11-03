@@ -1,8 +1,27 @@
-<h1><%= @Stock.alias %></h1>
+<h1><%= @stock.alias %></h1>
 
 <p>
-    <%= @stock.symbol %><br>
-    <%= @stock.currency %><br>
+    Symbol: <%= @stock.symbol %><br>
+    Currency: <%= @stock.currency %><br>
+    <% if @stock_data[:current_price].present? %>
+        Current Price: <%= @stock_data[:current_price].format %><br>
+        <% if @stock_data[:day_change].present? %>
+            Day Change:
+            <% if @stock_data[:day_change].amount > 0 %>
+                <span style="color: green;">+<%= @stock_data[:day_change].format %></span>
+            <% else %>
+                <span style="color: red;"><%= @stock_data[:day_change].format %></span>
+            <% end %><br>
+        <% end %>
+    <% end %>
+    <% if @stock.stock_orders.present? %>
+        Total Units: <%= @stock_data[:total_units] %><br>
+        Total Invested Amount: <%= @stock_data[:total_invested_amount].format %><br>
+        Average Unit Cost: <%= @stock_data[:average_unit_cost].format %><br>
+        <% if @stock_data[:current_value].present? %>
+            Current Value: <%= @stock_data[:current_value].format %><br>
+        <% end %>
+    <% end %>
 </p>
 
 <ul>
@@ -12,3 +31,11 @@
                     turbo_confirm: "Are you sure?"
     } %></li>
 </ul>
+
+<% if @stock.stock_orders.present? %>
+    <h2>Orders:</h2>
+    <%= render @stock.stock_orders %>
+<% end %>
+
+<h2>Add an order:</h2>
+<%= render "stock_orders/form", stock: @stock %>

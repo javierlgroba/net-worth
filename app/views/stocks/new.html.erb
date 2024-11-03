@@ -1,3 +1,10 @@
 <h1>New Stock</h1>
 
-<%= render "form", stock: @stock %>
+<%= form_with url: preview_stocks_path, method: :get, local: true do |form| %>
+    <div class="field">
+        <%= form.label :symbol, "Find Stock Symbol" %>
+        <%= form.text_field :symbol %>
+    </div>
+
+    <%= form.submit "Load Stock Data" %>
+<% end %>

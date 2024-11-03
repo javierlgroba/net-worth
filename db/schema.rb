@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_27_135821) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_02_132911) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,6 +22,18 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_27_135821) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "stock_orders", force: :cascade do |t|
+    t.float "units"
+    t.float "unit_cost"
+    t.date "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "stock_id", null: false
+    t.bigint "account_provider_id"
+    t.index ["account_provider_id"], name: "index_stock_orders_on_account_provider_id"
+    t.index ["stock_id"], name: "index_stock_orders_on_stock_id"
+  end
+
   create_table "stocks", force: :cascade do |t|
     t.string "symbol"
     t.string "alias"
@@ -29,4 +41,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_27_135821) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_foreign_key "stock_orders", "account_providers"
+  add_foreign_key "stock_orders", "stocks"
 end

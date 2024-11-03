@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     collection do
       get :preview
     end
+    resources :stock_orders
   end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

@@ -1,12 +1,57 @@
-<h1>Stocks</h1>
+<h1>Portfolio</h1>
 
-<ul>
-    <% @stocks.each do |stock| %>
-        <li>
-            <%= link_to stock.alias, stock %>
-        </li>
+<%= javascript_include_tag 'portfolio_chart' %>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    document.addEventListener('turbolinks:load', function() {
+        google.charts.load('current', {'packages':['corechart']});
+    });
+
+    document.addEventListener('turbolinks:before-cache', function() {
+        google.charts.unload();
+    });
+
+    google.charts.load('current', {'packages':['corechart']});
+
+    <% for currency, data in @portfolio_data do %>
+        <% if !data[:chart_data][:symbols].empty? %>
+            google.charts.setOnLoadCallback(function() {
+                drawChart(<%= raw data[:chart_data].to_json %>, '<%= currency.id %>');
+            });
+        <% end %>
     <% end %>
-</ul>
+</script>
 
+<% for currency, data in @portfolio_data do %>
 
-<%= link_to "New Stock", new_stock_path %>
+    <h2>Invested in <%= currency.name %></h2>
+
+    <% if !data[:chart_data][:symbols].empty? %>
+        <% data[:chart_data][:symbols].each do |symbol| %>
+            <input type="checkbox" id="checkbox-<%= currency.id %>-<%= symbol[:id] %>" onclick="toggleColumn()" checked>
+            <%= symbol[:alias] %>
+        <% end %>
+
+        <div id="chart_div_<%= currency.id %>" style="width: 100%; height: 500px; overflow: hidden;"></div>
+    <% end %>
+
+    Total Invested: <%= data[:total_invested_amount].format %><br>
+    Total Current Value: <%= data[:total_current_value].format %>
+    <% if data[:diff].amount > 0 %>
+        <span style="color: green;">+<%= data[:diff].format %></span>
+    <% else %>
+        <span style="color: red;"><%= data[:diff].format %></span>
+    <% end %>
+
+    <ul>
+        <% data[:stocks].each do |stock| %>
+            <li>
+                <%= link_to stock.alias, stock %>
+            </li>
+        <% end %>
+    </ul>
+
+<% end %>
+
+<%= link_to "Add Stock", new_stock_path %>

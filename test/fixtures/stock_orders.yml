@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  units: 1
+  unit_cost: 1.5
+  date: 2024-11-02
+
+two:
+  units: 1
+  unit_cost: 1.5
+  date: 2024-11-02

@@ -1,0 +1,24 @@
+<%= form_with model: [ stock, stock.stock_orders.build ] do |form| %>
+    <p>
+        <%= form.label :units %>:
+        <%= form.number_field :units, step: '1e-7' %>
+    </p>
+    <p>
+        <%= form.label :unit_cost %>:
+        <%= form.number_field :unit_cost, step: '1e-7'  %> (in <%= Money::Currency.new(stock.currency).symbol %>)
+    </p>
+    <p>
+        <%= form.label :date %>:
+        <%= form.date_select :date, start_year: 1988, end_date: Date.today %>
+    </p>
+    <p>
+        <%= form.label :account_provider %>:
+        <%= form.select :account_provider_id,
+            AccountProvider.all.sort_by(&:name).map { |account_provider| [account_provider.name, account_provider.id] },
+            { prompt: "Select Broker" }
+        %>
+    </p>
+    <p>
+        <%= form.submit %>
+    </p>
+<% end %>
