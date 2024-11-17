@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_02_132911) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_17_162101) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,20 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_02_132911) do
     t.integer "provider_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "deposits", force: :cascade do |t|
+    t.string "name"
+    t.float "apr"
+    t.float "tax"
+    t.date "maturity_date"
+    t.float "start_balance"
+    t.string "currency"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "account_provider_id"
+    t.date "open_date"
+    t.index ["account_provider_id"], name: "index_deposits_on_account_provider_id"
   end
 
   create_table "stock_orders", force: :cascade do |t|
@@ -42,6 +56,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_02_132911) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "deposits", "account_providers"
   add_foreign_key "stock_orders", "account_providers"
   add_foreign_key "stock_orders", "stocks"
 end

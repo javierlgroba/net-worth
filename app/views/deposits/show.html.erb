@@ -1,0 +1,46 @@
+<h1><%= @deposit.name %></h1>
+
+<p>
+    <strong>APR:</strong>
+    <%= @deposit.apr %> %
+</p>
+
+<p>
+    <strong>TAX:</strong>
+    <%= @deposit.tax %> %
+</p>
+
+<% if @deposit.open_date.present? %>
+    <p>
+        <strong>Open date:</strong>
+        <%= @deposit.open_date %>
+    </p>
+<% end %>
+
+<% if @deposit.maturity_date.present? %>
+    <p>
+        <strong>Maturity date:</strong>
+        <%= @deposit.maturity_date %>
+    </p>
+<% end %>
+
+<p>
+    <strong>Start Balance:</strong>
+    <%= Money.from_amount(@deposit.start_balance, @deposit.currency).format(format: FormatService.currency_format) %>
+</p>
+<%# TODO: add current balances %>
+
+<% if @deposit.account_provider_id.present? %>
+    <p>
+        <strong>Account Holder:</strong>
+        <%= @deposit.account_provider.name %>
+    </p>
+<% end %>
+
+<ul>
+    <li><%= link_to "Edit", edit_deposit_path(@deposit) %></li>
+    <li><%= link_to "Destroy", deposit_path(@deposit), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+    } %></li>
+</ul>

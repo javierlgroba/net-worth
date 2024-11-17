@@ -3,4 +3,5 @@ class AccountProvider < ApplicationRecord
     validates :name, presence: true
     validates :country, presence: true, inclusion: { in: ISO3166::Country.codes }
     has_many :stock_orders
+    has_many :deposits
 end

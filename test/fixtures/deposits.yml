@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  apr: 1.5
+  tax: 1.5
+  maturity_date: 2024-11-17
+  start_balance: 1.5
+  currency: MyString
+
+two:
+  name: MyString
+  apr: 1.5
+  tax: 1.5
+  maturity_date: 2024-11-17
+  start_balance: 1.5
+  currency: MyString

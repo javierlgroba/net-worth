@@ -1,0 +1,27 @@
+<h1>Deposits</h1>
+
+
+<% if !@deposits.empty? %>
+    <% @deposits.each do |deposit| %>
+        <% deposit_value = DepositHelper.get_deposit_value(deposit) %>
+        <h2><%= deposit.name %></h2>
+
+        Value at <%= deposit_value[:value_date] %>
+        will be <%= deposit_value[:value] %>
+        <span style="color: green;">+<%= deposit_value[:value_increase] %></span>
+        (tax: <%= deposit_value[:tax] %>)
+
+    <% end %>
+<% end %>
+
+
+<ul>
+    <% @deposits.each do |deposit| %>
+        <li>
+            <%= link_to deposit.name, deposit %>
+        </li>
+    <% end %>
+</ul>
+
+
+<%= link_to "New Deposit", new_deposit_path %>

@@ -28,4 +28,23 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  number:
+    currency:
+      format:
+        delimiter: ","
+        format: "%u%n"
+        suffix: ""
+        preffix: "%u"
+        precision: 2
+        separator: "."
+        significant: false
+        strip_insignificant_zeros: false
+    format:
+      delimiter: ","
+      precision: 3
+      separator: "."
+      significant: false
+      strip_insignificant_zeros: false
+  date:
+    formats:
+      default: "%m-%d-%Y"

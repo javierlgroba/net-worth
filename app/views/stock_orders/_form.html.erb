@@ -9,7 +9,7 @@
     </p>
     <p>
         <%= form.label :date %>:
-        <%= form.date_select :date, start_year: 1988, end_date: Date.today %>
+        <%= form.date_field :date, min: '1988-01-01', max: Date.today %>
     </p>
     <p>
         <%= form.label :account_provider %>:

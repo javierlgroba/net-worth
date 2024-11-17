@@ -1,0 +1,77 @@
+<%= form_with model: deposit do |form| %>
+    <div>
+        <%= form.label :name %>:
+        <%= form.text_field :name %>
+        <% deposit.errors.full_messages_for(:name).each do |message| %>
+            <div><%= message %></div>
+        <% end %>
+    </div>
+
+    <div>
+        <%= form.label :apr %>:
+        <%= form.number_field :apr, step: '1e-2'  %> %
+        <% deposit.errors.full_messages_for(:apr).each do |message| %>
+            <div><%= message %></div>
+        <% end %>
+    </div>
+
+    <div>
+        <%= form.label :tax %>:
+        <%= form.number_field :tax, step: '1'  %> %
+        <% deposit.errors.full_messages_for(:tax).each do |message| %>
+            <div><%= message %></div>
+        <% end %>
+    </div>
+
+    <div>
+        <%= form.label :start_balance %>:
+        <%= form.number_field :start_balance, step: '1e-2'  %>
+        <% deposit.errors.full_messages_for(:start_balance).each do |message| %>
+            <div><%= message %></div>
+        <% end %>
+    </div>
+
+
+    <div>
+        <%= form.label :currency %>:
+        <%=
+            form.select :currency,
+            Money::Currency.all.sort_by(&:name).map { |currency| [currency.name, currency.iso_code] },
+            { prompt: "Select Currency" }
+        %><br>
+        <% deposit.errors.full_messages_for(:currency).each do |message| %>
+            <div><%= message %></div>
+        <% end %>
+    </div>
+
+    <div>
+        <%= form.label :open_date %>:
+        <%= form.date_field :open_date, min: '1988-01-01', max: Date.today %>
+        <% deposit.errors.full_messages_for(:open_date).each do |message| %>
+            <div><%= message %></div>
+        <% end %>
+    </div>
+
+    <div>
+        <%= form.label :maturity_date %>:
+        <%= form.date_field :maturity_date, min: Date.today %>
+        <% deposit.errors.full_messages_for(:maturity_date).each do |message| %>
+            <div><%= message %></div>
+        <% end %>
+    </div>
+
+    <div>
+        <%= form.label :account_provider %>:
+        <%= form.select :account_provider_id,
+            AccountProvider.all.sort_by(&:name).map { |account_provider| [account_provider.name, account_provider.id] },
+            { prompt: "Select Deposit Holder" }
+        %>
+        <% deposit.errors.full_messages_for(:account_provider_id).each do |message| %>
+            <div><%= message %></div>
+        <% end %>
+    </div>
+
+    <div>
+        <%= form.submit %>
+    </div>
+<% end %>
